@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const LoginPage = ({ history }) => {
   const [email, setEmail] = useState("");
@@ -29,14 +30,15 @@ const LoginPage = ({ history }) => {
         }
       );
 
-      const { token } = response.data;
-      localStorage.setItem("token", token); // Save the token in localStorage
+      const userData = JSON.stringify(response.data);
 
+      localStorage.setItem("user", userData); // Save the token in localStorage
       setLoading(false);
       history.replace("/dashboard"); // Redirect to the dashboard or home page after login success
     } catch (err) {
       setLoading(false);
       setError("Invalid email or password");
+      toast.error("Login failed!");
     }
   };
 

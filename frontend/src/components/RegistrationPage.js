@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { TailSpin } from "react-loader-spinner";
+import { toast } from "react-toastify";
 
 const RegistrationPage = ({ history }) => {
   const [formData, setFormData] = useState({
@@ -10,6 +12,7 @@ const RegistrationPage = ({ history }) => {
   });
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   // Handle input changes
   const handleChange = (e) => {
@@ -37,12 +40,13 @@ const RegistrationPage = ({ history }) => {
     };
 
     try {
+      setIsLoading(true);
       // API call to create user
       const response = await axios.post(
         "http://localhost:5000/api/auth/signup",
         userData
       );
-
+      toast.success("Registration Successful!");
       // Handle success
       setSuccess(true);
       setError(null);
@@ -52,14 +56,15 @@ const RegistrationPage = ({ history }) => {
         password: "",
         confirmPassword: "",
       });
-      history.push("/login");
-
-      console.log(response.data.message); // Show success message or handle it
+      history.push("/");
     } catch (err) {
       // Handle errors
       setError(
         err.response?.data?.error || "Registration failed. Please try again."
       );
+      toast.error("Registration Falied");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -154,7 +159,13 @@ const RegistrationPage = ({ history }) => {
               type="submit"
               className="w-full py-2 px-4 bg-indigo-600 text-white font-semibold rounded-lg shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50"
             >
-              Register
+              {isLoading ? (
+                <div className="flex items-center justify-center">
+                  <TailSpin height={20} width={20} color="black" />
+                </div>
+              ) : (
+                "Register"
+              )}
             </button>
           </div>
         </form>
