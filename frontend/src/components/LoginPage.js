@@ -23,7 +23,7 @@ const LoginPage = ({ history }) => {
     try {
       // Making API request to login the user
       const response = await axios.post(
-        "http://localhost:5000/api/auth/login",
+        "https://todoapp-smr2.onrender.com/api/auth/login",
         {
           email,
           password,

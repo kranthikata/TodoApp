@@ -43,7 +43,7 @@ const RegistrationPage = ({ history }) => {
       setIsLoading(true);
       // API call to create user
       const response = await axios.post(
-        "http://localhost:5000/api/auth/signup",
+        "https://todoapp-smr2.onrender.com/api/auth/signup",
         userData
       );
       toast.success("Registration Successful!");
@@ -58,6 +58,7 @@ const RegistrationPage = ({ history }) => {
       });
       history.push("/");
     } catch (err) {
+      console.log(error);
       // Handle errors
       setError(
         err.response?.data?.error || "Registration failed. Please try again."

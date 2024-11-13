@@ -25,9 +25,12 @@ const Dashboard = ({ history }) => {
 
   const fetchTodos = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/api/todos/", {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const response = await axios.get(
+        "https://todoapp-smr2.onrender.com/api/todos/",
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
       setTodos(response.data.todos || []);
     } catch (error) {
       setTodos([]);
@@ -38,9 +41,13 @@ const Dashboard = ({ history }) => {
     if (!title) return alert("Title can't be empty");
     try {
       const newTodo = { title, status };
-      await axios.post("http://localhost:5000/api/todos", newTodo, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      await axios.post(
+        "https://todoapp-smr2.onrender.com/api/todos/",
+        newTodo,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
       fetchTodos();
       setTitle("");
       setStatus("pending");
@@ -52,7 +59,7 @@ const Dashboard = ({ history }) => {
 
   const deleteTodo = async (id) => {
     try {
-      await axios.delete(`http://localhost:5000/api/todos/${id}`, {
+      await axios.delete(`https://todoapp-smr2.onrender.com/api/todos/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       fetchTodos();
@@ -64,9 +71,13 @@ const Dashboard = ({ history }) => {
 
   const updateTodo = async (id, updatedData) => {
     try {
-      await axios.put(`http://localhost:5000/api/todos/${id}`, updatedData, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      await axios.put(
+        `https://todoapp-smr2.onrender.com/api/todos/${id}`,
+        updatedData,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
       fetchTodos();
       setShowEditModal(false);
       toast.success("Todo updated successfully!");
